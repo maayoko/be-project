@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import Home from "./Home";
 import * as colorsApi from "../../../api/colors/colors";
-import { getColorValue } from "../../../api/colors/mappers";
+import { getColor } from "../../../api/colors/mappers";
 import { useInputChange } from "../../utilites/useInputChange";
+import { createColor } from "../../../domain/services/colorService";
 
-const initialColor = { hex: "#000", idx: 0 };
+const initialColor = createColor({ hex: "#000", defaultColor: true });
 
 export default () => {
     const [title, changeTitle] = useInputChange("Awesome title");
@@ -16,21 +17,20 @@ export default () => {
             colorsApi.getColor()
                 .then(response => response.json())
                 .then(colorDetails => {
-                    const colorHex = getColorValue(colorDetails);
-                    const color = { hex: colorHex, idx: colors.length };
+                    const color = getColor(colorDetails);
                     pushColor([...colors, color])
                 });
         }
     }, [colors, currentColor]);
 
-    const changeCurrentColor = (colorIdx) => {
+    const changeCurrentColor = (color) => {
         let currentColor;
-        if (colorIdx === initialColor.idx) {
+        
+        if (color.default) {
             const randomColor = colors[Math.floor(Math.random() * 2) + 1];
             currentColor = randomColor;
         } else {
-            const black = colors[initialColor.idx];
-            currentColor = black;
+            currentColor = initialColor;
         }
 
         updateCurrentColor(currentColor);

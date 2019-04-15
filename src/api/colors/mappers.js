@@ -1,7 +1,9 @@
-const getColorValue = (response) => {
-    return `#${response.new_color}`;
+import {createColor} from "../../domain/services/colorService";
+
+const getColor = (response) => {
+    return createColor({ hex: `#${response.new_color}` });
 }
 
 export {
-    getColorValue
+    getColor
 }

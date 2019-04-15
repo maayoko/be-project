@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import Box from "../../components/Box";
@@ -20,7 +20,7 @@ const Home = ({
                 <Box key={idx} color={color.hex} />
             ))
         }
-        <Button onClick={() => changeColor(currentColor.idx)}>Change color</Button>
+        <Button onClick={() => changeColor(currentColor)}>Change color</Button>
         <Box color={currentColor.hex} />
         <Input value={title} onChange={changeTitle} />
     </div>
@@ -42,7 +42,7 @@ Home.defaultProps = {
     title: "Awesome title",
     changeTitle: () => {},
     changeColor: () => {},
-    currentColor: { hex: "#000", idx: 0 }
+    currentColor: { hex: "#000", _id: 0 }
 }
 
 export default Home;
